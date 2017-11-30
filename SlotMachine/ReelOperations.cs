@@ -8,23 +8,26 @@ namespace SlotMachine
 {
     class ReelOperations
     {
-        SlotMachineRandomNumber RM;
+        Random RN;
         Reel R;
 
         public ReelOperations()
         {
-
+            RN = new Random();
         }
 
-        public string SpinReel(Reel r)
+
+        public string SpinReel(Reel reel)
         {
-            return r.GetSymbolOnReelAtPosition(GetNumber(r));
+            int randomNumber = GetRandomNumber(0, (reel.TotalCountOfAllSymbolsOnReel() - 1));
+            return reel.GetSymbolOnReelAtPosition(randomNumber);
         }
 
-        private int GetNumber(Reel r)
+        private int GetRandomNumber(int lower, int upper)
         {
-            RM = new SlotMachineRandomNumber(0, r.TotalCountOfAllSymbolsOnReel());
-            return RM.GetBoundedNumber();
+            int result = 0;
+            result = RN.Next(lower, upper);
+            return result;
         }
 
         public List<Reel> GetReelSetForSlotMachine(int slots, List<int[]> s, int numberOfUniqueSymbolsOnReel)

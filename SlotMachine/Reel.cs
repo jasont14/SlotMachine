@@ -77,13 +77,14 @@ namespace SlotMachine
 
         public int GetUniqueNumberForSymbolBySymbolString(string s)
         {
-            int result = 99;
+            int result = 100;
 
             for (int i = 0; i<symbolsArrayOfSymbolsToSelectFrom.Length; i++)
             {
                 if(Convert.ToChar(s) == symbolsArrayOfSymbolsToSelectFrom[i])
                 {
                     result = i;
+                    break;
                 }
             }
 

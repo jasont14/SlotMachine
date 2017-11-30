@@ -45,7 +45,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReelOperations.cs" />
-    <Compile Include="SlotMachineRandomNumber.cs" />
     <Compile Include="Reel.cs" />
     <Compile Include="SlotMachine.cs" />
     <Compile Include="SlotMachineApp.cs" />

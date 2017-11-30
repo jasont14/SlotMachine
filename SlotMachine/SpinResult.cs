@@ -20,29 +20,33 @@ namespace SlotMachine
         public SpinResult()
         {
 
-        }
+            }
         public SpinResult(string rOneSymbol, string rTwoSymbol, string rThreeSymbol, bool win, int numberMatch, string symbolMatched, int pay)
         {
             ReelOneSymbol   = rOneSymbol;
             ReelTwoSymbol   = rTwoSymbol;
             ReelThreeSymbol = rThreeSymbol;
+            arrayOfSymbols = new string[3];
             SpinWon         = win;
             NumberMatched   = numberMatch;
             WinningSymbol   = symbolMatched;
             Payout          = pay;
+
         }
         public SpinResult(string rOneSymbol, string rTwoSymbol, string rThreeSymbol)
         {
             ReelOneSymbol = rOneSymbol;
             ReelTwoSymbol = rTwoSymbol;
-            ReelThreeSymbol = rThreeSymbol;        
+            ReelThreeSymbol = rThreeSymbol;
+            arrayOfSymbols = new string[3];
         }
 
         public SpinResult(string[] s)
         {
             ReelOneSymbol = s[0];
             ReelTwoSymbol = s[1];
-            ReelThreeSymbol = s[2];            
+            ReelThreeSymbol = s[2];
+            arrayOfSymbols = new string[3];
         }
 
         public string   ReelOneSymbol   { get => reelOneSymbol; set => reelOneSymbol = value; }

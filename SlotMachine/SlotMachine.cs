@@ -11,26 +11,22 @@ namespace SlotMachine
     {
         List<Reel> Reels = new List<Reel>();        
         ReelOperations RO;
-        SpinResult SR;
         int slotCount;
         
-        public SlotMachine(List<Reel> r, int slots) 
+        public SlotMachine(List<Reel> r, int slots)
         {
-            RO = new ReelOperations();
-            SR = new SpinResult();            
+            RO = new ReelOperations();            
             slotCount = slots;
             Reels = r;
         }        
 
-        public SpinResult Spin()
-        {   
+        public SpinResult Spin(SpinResult SR)
+        {
             SR.ArrayOfSymbols = new string[Reels.Count];
-
             for (int i=0; i<Reels.Count; i++)
             {
                 SR.ArrayOfSymbols[i] = RO.SpinReel(Reels[i]);
             }
-
             return SR;
         }        
     }

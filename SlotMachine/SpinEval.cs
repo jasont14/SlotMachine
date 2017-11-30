@@ -20,20 +20,11 @@ namespace SlotMachine
 
         internal SpinResult SR1 { get => SR; set => SR = value; }
 
-        public SpinEval(SpinResult s, SlotCalc sc)
+        public SpinEval(SlotCalc sc)
         {
-            SR1 = s;
             SC = sc;
-            SR1.Payout = 0;
-            SR1.NumberMatched = 0;
-            SR1.SpinWon = false;
-            SR1.WinningSymbol = "";
-
-            countOfWinningSymbolsMatched = 0;
             matchTwoSymbols = SymbolsWithTwoMatch();
             matchOneSymbols = SymbolsWithOneMatch();
-
-            EvaluateSpin();
         }
 
         private string[] SymbolsWithTwoMatch()
@@ -71,143 +62,153 @@ namespace SlotMachine
             return result;
         }
 
-        private void EvaluateSpin()
+        public SpinResult EvaluateSpin(SpinResult sr)
         {
-            bool matchOneWin = GetMatchOneWinResult();
-            bool matchTwoWin = GetMatchTwoWinResult();
-            bool matchThreeWin = GetMatchThreeWinResult();
+            bool matchThreeWin = false;
+            bool matchTwoWin = false;
+            bool matchOneWin = false;
+
+            matchThreeWin = GetMatchThreeWinResult(sr);
+            if (!matchThreeWin)
+            { 
+                matchTwoWin = GetMatchTwoWinResult(sr);
+            }
+            if (!matchThreeWin && !matchTwoWin)
+            {
+                matchOneWin = GetMatchOneWinResult(sr);
+            }
 
             if (matchThreeWin)
             {
-                SR1.WinningSymbol = winningSymbol;
-                SR1.NumberMatched = countOfWinningSymbolsMatched;
-                SR1.Payout = winningPayout;
+                sr.WinningSymbol = winningSymbol;
+                sr.NumberMatched = 3;
+                sr.Payout = GetPayout(winningSymbol,countOfWinningSymbolsMatched, sr);
+                sr.SpinWon = true;
+                sr.ReelOneSymbol = sr.ArrayOfSymbols[0];
+                sr.ReelTwoSymbol = sr.ArrayOfSymbols[1];
+                sr.ReelThreeSymbol = sr.ArrayOfSymbols[2];
             }
             else if (matchTwoWin)
             {
-                SR1.WinningSymbol = winningSymbol;
-                SR1.NumberMatched = countOfWinningSymbolsMatched;
-                SR1.Payout = winningPayout;
+                sr.WinningSymbol = winningSymbol;
+                sr.NumberMatched = 2;
+                sr.Payout = GetPayout(winningSymbol, countOfWinningSymbolsMatched, sr);
+                sr.SpinWon = true;
+                sr.ReelOneSymbol = sr.ArrayOfSymbols[0];
+                sr.ReelTwoSymbol = sr.ArrayOfSymbols[1];
+                sr.ReelThreeSymbol = sr.ArrayOfSymbols[2];
 
             }
             else if (matchOneWin)
             {
-                SR1.WinningSymbol = winningSymbol;
-                SR1.NumberMatched = countOfWinningSymbolsMatched;
-                SR1.Payout = winningPayout;
+                sr.WinningSymbol = winningSymbol;
+                sr.NumberMatched = 1;
+                sr.Payout = GetPayout(winningSymbol, countOfWinningSymbolsMatched,sr);
+                sr.SpinWon = true;
+                sr.ReelOneSymbol = sr.ArrayOfSymbols[0];
+                sr.ReelTwoSymbol = sr.ArrayOfSymbols[1];
+                sr.ReelThreeSymbol = sr.ArrayOfSymbols[2];
             }
             else
             {
-                SR1.WinningSymbol = "LOSS";
-                SR1.NumberMatched = 0;
-                SR1.Payout = 0;
+                sr.WinningSymbol = "LOSS";
+                sr.NumberMatched = 0;
+                sr.Payout = 0;
+                sr.SpinWon = false;
+                sr.ReelOneSymbol = sr.ArrayOfSymbols[0];
+                sr.ReelTwoSymbol = sr.ArrayOfSymbols[1];
+                sr.ReelThreeSymbol = sr.ArrayOfSymbols[2];
             }
+
+            return sr;
         }
 
-        private int GetPayout(string winningSymbol,int numberMatched)
+        private int GetPayout(string winningSymbol,int numberMatched, SpinResult s)
         {
             int result = 0;
-            int a = SC.Reels[0].GetUniqueNumberForSymbolBySymbolString(SR1.ArrayOfSymbols[0]);  //gets number of symbol
-            //loop through winning combinations
-
-            for (int i = 0; i<SC.WinningCombinations.GetLength(0); i++)
+            
+            int[,] pytCBO = SC.WinningCombinations;
+            int symbolNumber = SC.Reels[0].GetUniqueNumberForSymbolBySymbolString(winningSymbol);
+                
+            for (int i = 0; i<SC.WinningCombinationsPayout.Length; i++)
             {
-                if(SC.WinningCombinations[i,0]==a && SC.WinningCombinations[i,1] == countOfWinningSymbolsMatched)
+                if(SC.WinningCombinations[i,0]== symbolNumber && SC.WinningCombinations[i,1] == numberMatched)
                 {
                     result = SC.WinningCombinationsPayout[i];
+                    break;
                 }
             }
             return result;
         }
 
-        private bool GetMatchThreeWinResult()
+        private bool GetMatchThreeWinResult(SpinResult s)
         {
             bool matchThreeWin = false;
 
-            if (SR1.ArrayOfSymbols[0] == SR1.ArrayOfSymbols[1] && SR1.ArrayOfSymbols[1] == SR1.ArrayOfSymbols[2])
+            if (s.ArrayOfSymbols[0] == s.ArrayOfSymbols[1] && s.ArrayOfSymbols[1] == s.ArrayOfSymbols[2])
             {
                 matchThreeWin = true;
                 countOfWinningSymbolsMatched = 3;
-                winningSymbol = SR1.ArrayOfSymbols[0];
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);                
+                winningSymbol = s.ArrayOfSymbols[0];
             }
+
             return matchThreeWin;
         }
-
-        private bool GetMatchTwoWinResult()
+        
+        private bool GetMatchTwoWinResult(SpinResult s)
         {
             bool matchTwoWin = false;
 
-            if (SR1.ArrayOfSymbols[0] == SR1.ArrayOfSymbols[1] && Array.IndexOf(matchTwoSymbols, SR1.ArrayOfSymbols[0]) > -1)
+            if (s.ArrayOfSymbols[0] == s.ArrayOfSymbols[1] && Array.IndexOf(matchTwoSymbols, s.ArrayOfSymbols[0]) > -1)
             {
                 matchTwoWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[0];
                 countOfWinningSymbolsMatched = 2;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[0];
             }
 
-            if (SR1.ArrayOfSymbols[1] == SR1.ArrayOfSymbols[2] && Array.IndexOf(matchTwoSymbols, SR1.ArrayOfSymbols[1]) > -1)
+            if (s.ArrayOfSymbols[1] == s.ArrayOfSymbols[2] && Array.IndexOf(matchTwoSymbols, s.ArrayOfSymbols[1]) > -1)
             {
                 matchTwoWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[1];
                 countOfWinningSymbolsMatched = 2;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[1];
             }
 
-            if (SR1.ArrayOfSymbols[0] == SR1.ArrayOfSymbols[2] && Array.IndexOf(matchTwoSymbols, SR1.ArrayOfSymbols[2]) > -1)
+            if (s.ArrayOfSymbols[0] == s.ArrayOfSymbols[2] && Array.IndexOf(matchTwoSymbols, s.ArrayOfSymbols[2]) > -1)
             {
                 matchTwoWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[2];
                 countOfWinningSymbolsMatched = 2;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[2];
             }
 
             return matchTwoWin;
         }
 
-        private bool GetMatchOneWinResult()
+        private bool GetMatchOneWinResult(SpinResult s)
         {
             bool matchOneWin = false;
 
-            if (Array.IndexOf(matchOneSymbols, SR1.ArrayOfSymbols[0]) > -1)
+            if (Array.IndexOf(matchOneSymbols, s.ArrayOfSymbols[0]) > -1)
             {
                 matchOneWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[0];
                 countOfWinningSymbolsMatched = 1;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[0];
             }
-            if (Array.IndexOf(matchOneSymbols, SR1.ArrayOfSymbols[1]) > -1)
+            if (Array.IndexOf(matchOneSymbols, s.ArrayOfSymbols[1]) > -1)
             {
                 matchOneWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[1];
                 countOfWinningSymbolsMatched = 1;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[1];
+
             }
-            if (Array.IndexOf(matchOneSymbols, SR1.ArrayOfSymbols[2]) > -1)
+            if (Array.IndexOf(matchOneSymbols, s.ArrayOfSymbols[2]) > -1)
             {
                 matchOneWin = true;
-                winningSymbol = SR1.ArrayOfSymbols[2];
                 countOfWinningSymbolsMatched = 1;
-                winningPayout = GetPayout(winningSymbol, countOfWinningSymbolsMatched);
+                winningSymbol = s.ArrayOfSymbols[2];
             }
 
             return matchOneWin;
 
         }
-
-        //private bool MatchTwoPayOutTrue()
-        //{
-        //    bool result = false;
-
-        //    for (int i = 0; i < SC.WinningCombinations.GetLength(0); i++)
-        //    {
-        //        if (SC.WinningCombinations[i, 1] == 2)
-        //        {
-        //            result = true;
-        //        }
-        //    }
-        //    return result;
-        //}
-
     }
 }
