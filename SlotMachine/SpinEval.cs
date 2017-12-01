@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * Slot Machine Spin Simluation 
+ * Jason Thatcher
+ * MIT
+ * 2017
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
