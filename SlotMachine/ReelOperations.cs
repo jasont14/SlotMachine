@@ -19,7 +19,7 @@ namespace SlotMachine
 
         public string SpinReel(Reel reel)
         {
-            int randomNumber = GetRandomNumber(0, (reel.TotalCountOfAllSymbolsOnReel() - 1));
+            int randomNumber = GetRandomNumber(0, (reel.TotalCountOfAllSymbolsOnReel()));
             return reel.GetSymbolOnReelAtPosition(randomNumber);
         }
 

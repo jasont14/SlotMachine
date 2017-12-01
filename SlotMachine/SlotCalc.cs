@@ -53,6 +53,7 @@ namespace SlotMachine
         private void SetStats()
         {
             SetTotalWinningCombination();
+            SetTotalCombinations();
             GetWinningCombinationsPayoutOneCoin();
             GetWinningCombinationPayoutPercent();
             GetWinningCombinationSum();
@@ -157,6 +158,19 @@ namespace SlotMachine
             TotalWinningCombinations = j;
         }
 
+        private void SetTotalCombinations()
+        {
+            int result = 0;
+
+            int reel1Count = reels[0].TotalCountOfAllSymbolsOnReel();
+            int reel2Count = reels[1].TotalCountOfAllSymbolsOnReel();
+            int reel3Count = reels[2].TotalCountOfAllSymbolsOnReel();
+
+            result = reel1Count * reel2Count * reel3Count;
+
+            totalCombinations = result;
+        }
+
         public void BuildPayOffPercentagesTable()
         {
             Console.WriteLine("{0,5} {1,15} {2, 10} {3,15} {4, 12}", " Symbol", "Combinations", "Payout", "1-Coin Payout", "Payout %");
@@ -177,9 +191,9 @@ namespace SlotMachine
             Console.WriteLine("{0,3} {1,15} {2, 10} {3,15} {4, 12}", "Total", WinningCombinationsSum.Sum(), "**", WinningCombinationsPayoutOneCoinSum, WinningCombinationsPayoutPercentSum);
             Console.WriteLine("\nTotal Combinations: " + totalCombinations.ToString());
             Console.WriteLine("Winning Combinations: " + TotalWinningCombinations.ToString());
-            Console.WriteLine("Winning Percentage; {0}", (Convert.ToDouble(TotalWinningCombinations) / Convert.ToDouble(totalCombinations)).ToString("#0.##%"));
+            Console.WriteLine("Expected Winning Percentage; {0}", (Convert.ToDouble(TotalWinningCombinations) / Convert.ToDouble(totalCombinations)).ToString("#0.##%"));
 
-            Console.WriteLine("\nPayout Percentage: {0}", (Convert.ToDouble(WinningCombinationsPayoutOneCoinSum) / Convert.ToDouble(totalCombinations)).ToString("#0.##%"));
+            Console.WriteLine("Expected Payout Percentage: {0}", (Convert.ToDouble(WinningCombinationsPayoutOneCoinSum) / Convert.ToDouble(totalCombinations)).ToString("#0.##%"));
 
         }
 

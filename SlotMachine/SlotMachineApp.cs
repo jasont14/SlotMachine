@@ -40,11 +40,6 @@ namespace SlotMachine
             CheckForWin(SR);
         } 
 
-        private void DisplayHeader()
-        {
-            Console.WriteLine("SLOT MACHINE HEADER");
-        }
-
         private SpinResult PullHandle(SpinResult SR)
         {
             
@@ -131,16 +126,25 @@ namespace SlotMachine
             int TotalWinsCalc = AddAllResult();
             int TotalRolls = ListOfSpinResults.Count;
 
-            Console.WriteLine("Total Wins: {0} VS Total Wins Calc: {1} VS Total Wins Table: {2}",TotalWinsFromThis.ToString(),TotalWinsCalc.ToString(),"??50%");
-            Console.WriteLine("!!! Wins: {0} Payout: {1}", excli.ToString(),(SC.WinningCombinationsPayout[0]*excli).ToString());
-            Console.WriteLine("### Wins: {0} Payout: {1}", pound.ToString(),(SC.WinningCombinationsPayout[1] * pound).ToString());
-            Console.WriteLine("$$$ Wins: {0} Payout: {1}", threemoney.ToString(), (SC.WinningCombinationsPayout[2] * threemoney).ToString());
-            Console.WriteLine("$$  Wins: {0} Payout: {1}", twomoney.ToString(), (SC.WinningCombinationsPayout[3] * twomoney).ToString());
-            Console.WriteLine("$   Wins: {0} Payout: {1}", onemoney.ToString(), (SC.WinningCombinationsPayout[4] * onemoney).ToString());
-            Console.WriteLine("%%% Wins: {0} Payout: {1}", percenta.ToString(), (SC.WinningCombinationsPayout[5] * percenta).ToString());
-            Console.WriteLine("&&& Wins: {0} Payout: {1}", ampers.ToString(), (SC.WinningCombinationsPayout[6] * ampers).ToString());
-            Console.WriteLine(";;; Wins: {0} Payout: {1}", semicol.ToString(), (SC.WinningCombinationsPayout[7] * semicol).ToString());
+            SC.Reels[0].WriteSymbolsOnReelToConsole();
+            SC.Reels[1].WriteSymbolsOnReelToConsole();
+            SC.Reels[2].WriteSymbolsOnReelToConsole();
 
+            Console.WriteLine("\n\n");
+
+            Console.WriteLine("Total Spins: {0} Total Winning Spins: {1} Total Payout: {2}",TotalRolls.ToString("#,###"), TotalWinsFromThis.ToString("#,###"),SumPayout().ToString("#,###"));
+            Console.WriteLine("\n");
+            Console.WriteLine("!!! Wins: {0,-7} Payout: {1,-7} Payout %: {2}", excli.ToString("#,###"),(SC.WinningCombinationsPayout[0]*excli).ToString(),(Convert.ToDouble(SC.WinningCombinationsPayout[0] * excli) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("### Wins: {0,-7} Payout: {1,-7} Payout %: {2}", pound.ToString("#,###"),(SC.WinningCombinationsPayout[1] * pound).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[1] * pound) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("$$$ Wins: {0,-7} Payout: {1,-7} Payout %: {2}", threemoney.ToString("#,###"), (SC.WinningCombinationsPayout[2] * threemoney).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[2] * threemoney) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("$$  Wins: {0,-7} Payout: {1,-7} Payout %: {2}", twomoney.ToString("#,###"), (SC.WinningCombinationsPayout[3] * twomoney).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[3]*twomoney) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("$   Wins: {0,-7} Payout: {1,-7} Payout %: {2}", onemoney.ToString("#,###"), (SC.WinningCombinationsPayout[4] * onemoney).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[4]*onemoney) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("%%% Wins: {0,-7} Payout: {1,-7} Payout %: {2}", percenta.ToString("#,###"), (SC.WinningCombinationsPayout[5] * percenta).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[5]*percenta) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("&&& Wins: {0,-7} Payout: {1,-7} Payout %: {2}", ampers.ToString("#,###"), (SC.WinningCombinationsPayout[6] * ampers).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[6]*ampers) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine(";;; Wins: {0,-7} Payout: {1,-7} Payout %: {2}", semicol.ToString("#,###"), (SC.WinningCombinationsPayout[7] * semicol).ToString(), (Convert.ToDouble(SC.WinningCombinationsPayout[7]*semicol) / Convert.ToDouble(SumPayout())).ToString("#0.###%"));
+            Console.WriteLine("\n");
+            Console.WriteLine("Actual Winning Percentage: {0}", (Convert.ToDouble(TotalWinsFromThis) / Convert.ToDouble(TotalRolls)).ToString("0#.##%"));
+            Console.WriteLine("Actual Payout Percentage: {0}", (Convert.ToDouble(SumPayout())/Convert.ToDouble(TotalRolls)).ToString("0#.##%"));
 
 
         }

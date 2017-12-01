@@ -8,7 +8,7 @@ namespace SlotMachine
         {
             SlotMachineApp myApp = new SlotMachineApp();
             
-            for (int i = 0; i< 3600; i++)
+            for (int i = 0; i<100000; i++)
             {
                 myApp.Play();
             }

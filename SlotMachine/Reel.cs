@@ -123,10 +123,11 @@ namespace SlotMachine
 
         public void WriteSymbolsOnReelToConsole()
         {
+            Console.Write("\nReel: ");
             int counter = 0;
             foreach (char c in SymbolArrayOfEachSymbolInOrderAsOnReel)
             {
-                Console.WriteLine("Position {0} symbol: {1}",counter.ToString(),c.ToString());
+                Console.Write(" {1} ",counter.ToString(),c.ToString());
                 counter += 1;
             }
         }
