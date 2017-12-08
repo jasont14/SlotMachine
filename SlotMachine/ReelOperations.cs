@@ -1,8 +1,9 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* ReelOperations.cs                                Jason Thatcher
+ *                                                  December 2017
+ * 
+ * Executes basic reel operations such as "Spin".  Requires reel object.
+ * 
+ * C#, Loop, Conditional, Methods Comments, Console.
 */
 
 using System;

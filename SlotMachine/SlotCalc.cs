@@ -1,8 +1,10 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* ReelOperations.cs                                Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Calculates probabilities and generates Probability Table with
+ * comparison.  Set the number of "spins" in Program.CS.
+ * 
+ * C#, Probability, Loop, Conditional, Methods Comments, Console.
 */
 
 using System;

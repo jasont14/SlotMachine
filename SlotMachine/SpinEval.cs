@@ -1,16 +1,14 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* SpinEval.cs                                      Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Evaluates the spin results to determine winnings and provides
+ * spin result with information.
+ * 
+ * C#, Probability, Loop, Conditional, Methods Comments, Console.
 */
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SlotMachine
 {

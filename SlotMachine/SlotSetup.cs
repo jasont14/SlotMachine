@@ -1,8 +1,11 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* SlotSetup.cs                                Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Controls how the slot machine is setup.  Sets winning combinations,
+ * Payout for each combination, and number of symbol types on each
+ * reel.
+ * 
+ * C#, Probability, Loop, Conditional, Methods Comments, Console.
 */
 
 using System;

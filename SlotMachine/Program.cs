@@ -1,8 +1,10 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* Program.cs                                       Jason Thatcher
+ *                                                  December 2017
+ * 
+ * Entry to SlotMachine app.  Sets number of iterations below by
+ * changing value of "i" in for loop.
+ * 
+ * C#, Loop, Comments, Console.
 */
 
 

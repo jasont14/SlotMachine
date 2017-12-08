@@ -1,8 +1,9 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* SpinResult.cs                                   Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Class to record information about each spin.
+ * 
+ * C#, Methods Comments.
 */
 
 using System;

@@ -1,8 +1,9 @@
-﻿/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+﻿/* SlotMachine.cs                                   Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Represents Slot Machine contains reels and generates spin results.
+ * 
+ * C#, Loop, Conditional, Methods.
 */
 using System;
 using System.Collections;

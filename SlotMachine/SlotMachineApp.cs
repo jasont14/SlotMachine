@@ -1,9 +1,12 @@
 ﻿
-/*
- * Slot Machine Spin Simluation 
- * Jason Thatcher
- * MIT
- * 2017
+/* SlotMachineApp.cs                                Jason Thatcher
+ *                                                  November 2017
+ * 
+ * Manages the slot machine application.  Records spin information
+ * generates console table with results of play.
+ * 
+ * C#, Loop, Conditional, Methods Comments, Console.
+ * 
 */
 
 using System;

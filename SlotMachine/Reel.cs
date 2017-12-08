@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/* Reel.cs                                          Jason Thatcher
+ *                                                  December 2017
+ * 
+ * Represents a "reel" in a slot machine. Provides methods to retrieve
+ * information about the reel.
+ * 
+ * C#, Arrays, Methods, Loop, Conditional, Comments, Console.
+*/
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SlotMachine
 {
