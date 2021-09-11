@@ -16,7 +16,6 @@ namespace SlotMachine
     {
         static void Main(string[] args)
         {
-
             SlotMachineApp myApp = new SlotMachineApp();
             
             for (int i = 0; i<100000; i++)
